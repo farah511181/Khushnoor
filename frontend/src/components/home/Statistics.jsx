@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useInView } from 'motion/react'
 
 const STATS = [
-  { value: 123, suffix: '+', label: 'Cups of Coffee' },
-  { value: 743, suffix: '+', label: 'Happy Couples' },
-  { value: 15, suffix: '', label: 'Years of Passion' },
-  { value: 54, suffix: '', label: 'Destinations' },
-  { value: 954, suffix: '', label: 'Ceremonies' },
+  { value: 253, suffix: '+', label: 'Weddings  Captured' },
+  { value: 523, suffix: '+', label: 'Happy Couples' },
+  { value: 10, suffix: '', label: 'Years of Passion' },
+  { value: 26, suffix: '', label: 'Destinations' },
+  { value: 338, suffix: '', label: 'Ceremonies' },
 ]
 
 function Counter({ value }) {
@@ -38,7 +38,7 @@ function Counter({ value }) {
 
 export default function Statistics() {
   return (
-<section className="py-20 lg:py-[100px] bg-nude">
+<section className="py-20 lg:py-[100px] #FAF7F2">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-y-10 gap-x-6">
           {STATS.map((stat, i) => (

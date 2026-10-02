@@ -3,7 +3,7 @@ import { motion } from 'motion/react'
 import logo from '../../assets/logo/logo.png'
 
 const EMAIL = 'contact@hemantsharmaphotography.com'
-const PHONE = '+917744033650'
+const PHONE = '+91 7744033650'
 
 const SOCIALS = [
   {
@@ -82,7 +82,10 @@ const SOCIALS = [
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-60px' },
+  viewport: {
+    once: true,
+    margin: '-60px',
+  },
   transition: {
     duration: 0.7,
     ease: 'easeOut',
@@ -95,21 +98,43 @@ export default function Footer() {
   return (
     <footer
       className="w-full"
-      style={{ backgroundColor: '#E2D8CA' }}
+      style={{
+        backgroundColor: '#E2D8CA',
+      }}
     >
+      {/* ===== MAIN FOOTER ===== */}
       <div
         className="max-w-[1400px] mx-auto px-6 lg:px-16"
         style={{
-          paddingTop: '80px',
-          paddingBottom: '70px',
+          paddingTop: '50px',
+          paddingBottom: '45px',
         }}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-20 md:gap-12 lg:gap-8">
+        <div
+          className="
+            grid
+            grid-cols-1
+            md:grid-cols-2
+            lg:grid-cols-3
+            gap-y-10
+            md:gap-8
+            lg:gap-6
+            items-center
+          "
+        >
 
           {/* ===== LEFT — FOLLOW US ===== */}
           <motion.div
             {...fadeUp}
-            className="flex flex-col items-center lg:items-start text-center lg:text-left"
+            className="
+              flex
+              flex-col
+              items-center
+              lg:items-start
+              justify-center
+              text-center
+              lg:text-left
+            "
           >
             <h3
               className="font-serif font-light italic leading-tight"
@@ -123,14 +148,12 @@ export default function Footer() {
             </h3>
 
             {/* ===== SOCIAL ICONS ===== */}
-            <div className="mt-10 flex items-center">
-
+            <div className="mt-5 flex items-center">
               {SOCIALS.map((s, i) => (
                 <span
                   key={s.label}
                   className="flex items-center"
                 >
-
                   {/* Divider */}
                   {i > 0 && (
                     <span
@@ -144,7 +167,11 @@ export default function Footer() {
 
                   <motion.a
                     href={s.href}
-                    target={s.label === 'Email' ? '_self' : '_blank'}
+                    target={
+                      s.label === 'Email'
+                        ? '_self'
+                        : '_blank'
+                    }
                     rel={
                       s.label === 'Email'
                         ? undefined
@@ -163,7 +190,13 @@ export default function Footer() {
                       duration: 0.3,
                       ease: 'easeOut',
                     }}
-                    className="flex items-center justify-center w-10 h-10"
+                    className="
+                      flex
+                      items-center
+                      justify-center
+                      w-10
+                      h-10
+                    "
                   >
                     <span
                       className="transition-colors duration-300"
@@ -182,10 +215,8 @@ export default function Footer() {
                       {s.icon}
                     </span>
                   </motion.a>
-
                 </span>
               ))}
-
             </div>
           </motion.div>
 
@@ -201,13 +232,23 @@ export default function Footer() {
               duration: 0.9,
               ease: 'easeOut',
             }}
-            className="flex items-center justify-center order-first lg:order-none mb-6 lg:mb-0 md:col-span-2 lg:col-span-1"
+            className="
+              flex
+              items-center
+              justify-center
+              order-first
+              lg:order-none
+              mb-4
+              lg:mb-0
+              md:col-span-2
+              lg:col-span-1
+            "
           >
-            <div className="flex items-center gap-14 lg:gap-20">
+            <div className="flex items-center gap-12 lg:gap-16">
 
               {/* Left divider */}
               <span
-                className="hidden lg:block h-24 w-px"
+                className="hidden lg:block h-20 w-px"
                 style={{
                   backgroundColor: '#D5C9BB',
                 }}
@@ -225,8 +266,8 @@ export default function Footer() {
                   alt="Hemant Sharma Photography"
                   className="
                     w-[120px]
-                    md:w-[150px]
-                    lg:w-[180px]
+                    md:w-[155px]
+                    lg:w-[220px]
                     h-auto
                     object-contain
                   "
@@ -235,7 +276,7 @@ export default function Footer() {
 
               {/* Right divider */}
               <span
-                className="hidden lg:block h-24 w-px"
+                className="hidden lg:block h-20 w-px"
                 style={{
                   backgroundColor: '#D5C9BB',
                 }}
@@ -248,7 +289,15 @@ export default function Footer() {
           {/* ===== RIGHT — REACH US ===== */}
           <motion.div
             {...fadeUp}
-            className="flex flex-col items-center lg:items-end text-center lg:text-right"
+            className="
+              flex
+              flex-col
+              items-center
+              lg:items-end
+              justify-center
+              text-center
+              lg:text-right
+            "
           >
             <h3
               className="font-serif font-light italic leading-tight"
@@ -261,9 +310,16 @@ export default function Footer() {
               Reach Us
             </h3>
 
+            {/* Phone */}
             <a
-              href="tel:+910000000000"
-              className="mt-6 font-sans text-[17px] transition-colors duration-300"
+              href={`tel:${PHONE}`}
+              className="
+                mt-3
+                font-sans
+                text-[17px]
+                transition-colors
+                duration-300
+              "
               style={{
                 color: '#806B60',
               }}
@@ -279,9 +335,22 @@ export default function Footer() {
               {PHONE}
             </a>
 
+            {/* Book Your Shoot */}
             <Link
               to="/contact"
-              className="group relative mt-8 inline-flex items-center gap-3 font-sans text-[13px] uppercase tracking-[0.28em] py-1"
+              className="
+                group
+                relative
+                mt-3
+                inline-flex
+                items-center
+                gap-3
+                font-sans
+                text-[13px]
+                uppercase
+                tracking-[0.28em]
+                py-1
+              "
               style={{
                 color: '#654C43',
               }}
@@ -289,7 +358,16 @@ export default function Footer() {
               Book Your Shoot
 
               <span
-                className="absolute left-0 -bottom-0.5 h-px w-0 group-hover:w-full transition-all duration-[600ms]"
+                className="
+                  absolute
+                  left-0
+                  -bottom-0.5
+                  h-px
+                  w-0
+                  group-hover:w-full
+                  transition-all
+                  duration-[600ms]
+                "
                 style={{
                   backgroundColor: '#654C43',
                 }}
@@ -300,7 +378,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* ===== BOTTOM BAR ===== */}
+      {/* ===== COPYRIGHT ===== */}
       <div
         className="w-full flex items-center"
         style={{
@@ -309,26 +387,32 @@ export default function Footer() {
           borderTop: '1px solid #E5DDD4',
         }}
       >
-        <div className="max-w-[1400px] mx-auto w-full px-6 lg:px-16 flex items-center justify-between gap-4 flex-wrap">
-
+        <div
+          className="
+            max-w-[1400px]
+            mx-auto
+            w-full
+            px-6
+            lg:px-16
+            flex
+            items-center
+            justify-center
+          "
+        >
           <p
-            className="font-sans text-[11px] uppercase tracking-[0.18em]"
+            className="
+              font-sans
+              text-[11px]
+              uppercase
+              tracking-[0.18em]
+              text-center
+            "
             style={{
               color: '#806B60',
             }}
           >
             © {year} Hemant Sharma Photography. All Rights Reserved.
           </p>
-
-          <p
-            className="font-sans text-[11px] uppercase tracking-[0.18em]"
-            style={{
-              color: '#806B60',
-            }}
-          >
-            Designed with Elegance
-          </p>
-
         </div>
       </div>
     </footer>

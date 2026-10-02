@@ -43,11 +43,11 @@ export default function About() {
       {/* MEET THE FOUNDER */}
       {/* ====================================================== */}
 
-      <section className="bg-[#09090b] text-white overflow-hidden">
+      <section className="bg-black overflow-hidden">
         <div className="lg:min-h-[640px] grid grid-cols-1 lg:grid-cols-2 lg:items-stretch">
 
           {/* ================================================== */}
-          {/* FOUNDER CONTENT — LEFT */}
+          {/* ABOUT CONTENT — LEFT */}
           {/* ================================================== */}
 
           <motion.div
@@ -61,6 +61,7 @@ export default function About() {
               flex
               items-center
               justify-center
+              bg-[#E2D8CA]
               px-6
               py-16
               sm:px-10
@@ -79,11 +80,11 @@ export default function About() {
                   md:text-xs
                   uppercase
                   tracking-[0.45em]
-                  text-white/60
+                  text-[#A07A68]
                   mb-5
                 "
               >
-                Meet
+                About
               </p>
 
               {/* Heading */}
@@ -93,14 +94,14 @@ export default function About() {
                   font-display
                   text-4xl
                   md:text-5xl
-                  text-white
+                  text-[#A07A68]
                   leading-tight
                 "
               >
-                Our Founder
+                Hemant Sharma
               </h2>
 
-              {/* Intro */}
+              {/* About Content */}
 
               <div
                 className="
@@ -109,137 +110,46 @@ export default function About() {
                   text-sm
                   md:text-base
                   leading-relaxed
-                  text-white/70
+                  text-[#5F5148]
                 "
               >
 
                 <p>
-                  I’m Hemant Sharma, Founder and Creative Director of
-                  <span className="text-white">
-                    {' '}Hemant Sharma Photography
-                  </span>{' '}
-                  and
-                  <span className="text-white">
-                    {' '}Studio Portrait by Hemant.
-                  </span>
+                  I’m <span className="text-[#A07A68] font-medium">Hemant Sharma</span>, Founder and Creative Director of{' '}
+                  <span className="text-[#A07A68] font-medium">Hemant Sharma Photography</span> and{' '}
+                  <span className="text-[#A07A68] font-medium">Studio Portrait by Hemant</span>.
                 </p>
 
                 <p>
-                  Photography, for me, has never been simply about creating
-                  beautiful images. It is about preserving emotions, documenting
-                  genuine connections, and transforming fleeting moments into
-                  memories that last a lifetime.
+                  For me, photography is more than creating beautiful images—it’s about preserving emotions,
+                  genuine connections, and life’s most meaningful moments. With{' '}
+                  <span className="text-[#A07A68] font-medium">7+ years of professional experience</span> and{' '}
+                  <span className="text-[#A07A68] font-medium">500+ weddings captured</span>, I believe the best
+                  photographs are the ones you can truly feel.
                 </p>
 
                 <p>
-                  With over
-                  <span className="text-white">
-                    {' '}7 years of professional experience
-                  </span>{' '}
-                  and more than
-                  <span className="text-white">
-                    {' '}500 weddings captured,
-                  </span>{' '}
-                  my journey has been shaped by a simple belief: the best
-                  photographs are the ones you can feel.
+                  Every wedding, portrait, and celebration has its own story. Instead of following a standard
+                  approach, we take the time to understand each client and create timeless, natural images filled
+                  with real emotions, authentic expressions, and meaningful moments.
                 </p>
 
                 <p>
-                  Every wedding, portrait session, and celebration carries its
-                  own personality. Rather than following a fixed formula, we
-                  take the time to understand each story and capture it in a
-                  way that feels honest, personal, and timeless.
+                  Our style blends storytelling, creative composition, and refined aesthetics to deliver photographs
+                  that are both elegant and memorable. From the first consultation to the final delivery, every
+                  detail is handled with care to ensure a seamless and premium experience.
                 </p>
 
                 <p>
-                  At
-                  <span className="text-white">
-                    {' '}Studio Portrait by Hemant,
-                  </span>{' '}
-                  we believe great photography goes beyond perfect poses.
-                  Genuine expressions, real emotions, spontaneous laughter,
-                  quiet glances, and those unexpected moments often become the
-                  photographs people treasure the most.
+                  Every image is carefully selected and professionally edited with attention to detail. Our goal is
+                  not just to deliver photographs, but to create memories that you and your family will cherish for
+                  generations.
                 </p>
 
                 <p>
-                  Our approach combines
-                  <span className="text-white">
-                    {' '}storytelling, thoughtful composition, natural emotion,
-                    {' '}and refined visual aesthetics
-                  </span>{' '}
-                  to create imagery that feels both contemporary and
-                  meaningful.
+                  Our mission is simple:{' '}
+                  <span className="text-[#A07A68] font-medium">to create photographs that make you feel.</span>
                 </p>
-
-                <p>
-                  From our first conversation to the final delivery, every
-                  detail is handled with care. We believe a premium photography
-                  experience is not only about the final photographs, but also
-                  about making the entire journey comfortable, personal, and
-                  memorable for our clients.
-                </p>
-
-                <p>
-                  Each image is thoughtfully selected, professionally edited,
-                  and refined with attention to the smallest details. The goal
-                  is never simply to deliver photographs, but to create a
-                  collection that allows you to return to a moment and
-                  experience it all over again.
-                </p>
-
-                <p>
-                  Our mission is simple:
-                  <span className="text-white">
-                    {' '}to create photographs that make you feel.
-                  </span>
-                </p>
-
-                <p>
-                  Whether it is a wedding day, an intimate portrait, a fashion
-                  story, or a family celebration, we look for the moments that
-                  carry emotion and meaning — the moments that remain long after
-                  the day itself has passed.
-                </p>
-
-                <p>
-                  Client satisfaction remains at the heart of everything we do.
-                  We aim not only to meet expectations, but to exceed them
-                  through exceptional quality, personalized service, and
-                  photographs that families can cherish for generations.
-                </p>
-
-                {/* Closing Statement */}
-
-                <div className="pt-5 border-t border-white/10">
-
-                  <p
-                    className="
-                      font-display
-                      text-xl
-                      md:text-2xl
-                      leading-relaxed
-                      text-white
-                    "
-                  >
-                    “Every photograph is more than an image —
-                    it is a story, an emotion, and a memory preserved forever.”
-                  </p>
-
-                  <p
-                    className="
-                      mt-5
-                      font-sans
-                      text-[10px]
-                      uppercase
-                      tracking-[0.35em]
-                      text-white/45
-                    "
-                  >
-                    — Hemant Sharma
-                  </p>
-
-                </div>
 
               </div>
             </div>
@@ -261,6 +171,7 @@ export default function About() {
               h-[60vh]
               lg:h-auto
               overflow-hidden
+              bg-black
             "
           >
             <img
@@ -279,6 +190,7 @@ export default function About() {
 
         </div>
       </section>
+
 
       {/* ====================================================== */}
       {/* VALUES */}

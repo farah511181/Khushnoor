@@ -1,22 +1,48 @@
-﻿import Intro2 from '../../assets/Imagess/IntroImage/Intro2.jpeg'
+﻿import { useEffect, useState } from "react";
+
+import Home1 from "../../assets/Imagess/HomeImage/Home1.jpg";
+import Home2 from "../../assets/Imagess/HomeImage/Home2.jpg";
+import Home3 from "../../assets/Imagess/HomeImage/Home3.jpg";
+import Home4 from "../../assets/Imagess/HomeImage/Home4.jpg";
+import Home5 from "../../assets/Imagess/HomeImage/Home5.jpg";
+import Home6 from "../../assets/Imagess/HomeImage/Home6.jpg";
+
+const images = [Home1, Home2, Home3, Home4, Home5, Home6];
+
+// [x y] anchors — mobile-first value, then md: override for desktop
+const objectPositions = [
+  "object-[center_center] md:object-center", // Home1 - try 'center' x first; adjust if sides still crop badly
+  "object-center md:object-center",
+  "object-center md:object-center",
+  "object-center md:object-center",
+  "object-center md:object-center",
+  "object-center md:object-center",
+];
 
 export default function Hero() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-[#9bb9d2]">
-      <img
-        src={Intro2}
-        alt="Hemant Sharma Photography"
-        loading="eager"
-        fetchPriority="high"
-        decoding="async"
-        className="
-          absolute
-          inset-0
-          w-full
-          h-full
-          object-center
-        "
-      />
+    <section className="relative w-screen h-screen overflow-hidden bg-black">
+      {images.map((image, index) => (
+        <img
+          key={index}
+          src={image}
+          alt={`Hemant Sharma Photography - ${index + 1}`}
+          loading={index === 0 ? "eager" : "lazy"}
+          className={`absolute inset-0 w-full h-full object-cover ${objectPositions[index]} transition-opacity duration-1000 ease-in-out ${
+            index === current ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
     </section>
-  )
+  );
 }

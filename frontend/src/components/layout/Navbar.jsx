@@ -4,27 +4,24 @@ import { useState, useEffect, useRef } from 'react'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import logo from '../../assets/logo/logo-white.png'
 
-
 // ======================================================
 // MAIN NAVIGATION
-// Photography and Stories are handled separately
-// because they have dropdown menus.
 // ======================================================
 
 const NAV_LINKS = [
   { label: 'Home', path: '/' },
   { label: 'About Us', path: '/about' },
-  { label: 'Photography', path: '/photography' },
+  { label: 'Weddings', path: '/photography' },
+  { label: 'Studio', path: '/studio' },
   { label: 'Stories', path: '/stories' },
   { label: 'Book Us', path: '/contact' },
 ]
 
-
 // ======================================================
-// PHOTOGRAPHY DROPDOWN
+// WEDDINGS DROPDOWN
 // ======================================================
 
-const PHOTOGRAPHY_LINKS = [
+const WEDDING_LINKS = [
   {
     label: 'Wedding',
     path: '/photography/wedding',
@@ -36,18 +33,51 @@ const PHOTOGRAPHY_LINKS = [
     label: 'Pre-Wedding',
     path: '/photography/pre-wedding',
     number: '02',
-    description:
-      'Intimate stories captured with an editorial cinematic feel.',
-  },
-  {
-    label: 'Fashion',
-    path: '/photography/fashion',
-    number: '03',
-    description:
-      'Bold portraits, refined compositions and modern visual stories.',
-  },
+    description:'Intimate stories captured with an editorial cinematic feel.',
+ },
 ]
 
+// ======================================================
+// STUDIO DROPDOWN
+// ======================================================
+
+const STUDIO_LINKS = [
+  {
+    label: 'Kids',
+    path: '/studio/kids',
+    number: '01',
+    description:
+      'Playful portraits and beautiful little moments captured naturally.',
+  },
+  {
+    label: 'Maternity',
+    path: '/studio/maternity',
+    number: '02',
+    description:
+      'Elegant portraits celebrating motherhood and new beginnings.',
+  },
+  {
+    label: 'Newborn',
+    path: '/studio/newborn',
+    number: '03',
+    description:
+      'Soft and intimate portraits preserving the earliest days of your little one.',
+  },
+  {
+    label: 'Family',
+    path: '/studio/family',
+    number: '04',
+    description:
+      'Warm family portraits capturing connection, love and togetherness.',
+  },
+  {
+    label: 'Fashion & Portfolio',
+    path: '/studio/fashion-portfolio',
+    number: '05',
+    description:
+      'Editorial portraits, creative concepts and fashion-forward visual stories.',
+  },
+]
 
 // ======================================================
 // STORIES DROPDOWN
@@ -84,20 +114,30 @@ const STORIES_LINKS = [
   },
 ]
 
+// ======================================================
+// NAVBAR
+// ======================================================
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  // Desktop Photography dropdown
-  const [photographyOpen, setPhotographyOpen] = useState(false)
+  // Desktop Weddings dropdown
+  const [weddingsOpen, setWeddingsOpen] = useState(false)
+
+  // Desktop Studio dropdown
+  const [studioOpen, setStudioOpen] = useState(false)
 
   // Desktop Stories dropdown
   const [storiesOpen, setStoriesOpen] = useState(false)
 
-  // Mobile Photography submenu
-  const [mobilePhotographyOpen, setMobilePhotographyOpen] =
+  // Mobile Weddings submenu
+  const [mobileWeddingsOpen, setMobileWeddingsOpen] =
+    useState(false)
+
+  // Mobile Studio submenu
+  const [mobileStudioOpen, setMobileStudioOpen] =
     useState(false)
 
   // Mobile Stories submenu
@@ -109,9 +149,10 @@ export default function Navbar() {
 
   const lastYRef = useRef(0)
   const rafRef = useRef(null)
-  const photographyRef = useRef(null)
-  const storiesRef = useRef(null)
 
+  const weddingsRef = useRef(null)
+  const studioRef = useRef(null)
+  const storiesRef = useRef(null)
 
   // ======================================================
   // SCROLL HANDLER
@@ -125,7 +166,6 @@ export default function Navbar() {
         const y = window.scrollY
         const delta = y - lastYRef.current
 
-        // At the top — always visible and transparent
         if (y <= 40) {
           setHidden(false)
           setScrolled(false)
@@ -133,10 +173,8 @@ export default function Navbar() {
           setScrolled(true)
 
           if (delta > 4) {
-            // Scrolling down -> hide navbar
             setHidden(true)
           } else if (delta < -4) {
-            // Scrolling up -> show navbar
             setHidden(false)
           }
         }
@@ -159,20 +197,19 @@ export default function Navbar() {
     }
   }, [])
 
-
   // ======================================================
   // CLOSE MENUS AFTER NAVIGATION
   // ======================================================
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMobileOpen(false)
-    setPhotographyOpen(false)
+    setWeddingsOpen(false)
+    setStudioOpen(false)
     setStoriesOpen(false)
-    setMobilePhotographyOpen(false)
+    setMobileWeddingsOpen(false)
+    setMobileStudioOpen(false)
     setMobileStoriesOpen(false)
   }, [location.pathname])
-
 
   // ======================================================
   // CLOSE DESKTOP DROPDOWNS WHEN CLICKING OUTSIDE
@@ -181,10 +218,17 @@ export default function Navbar() {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        photographyRef.current &&
-        !photographyRef.current.contains(event.target)
+        weddingsRef.current &&
+        !weddingsRef.current.contains(event.target)
       ) {
-        setPhotographyOpen(false)
+        setWeddingsOpen(false)
+      }
+
+      if (
+        studioRef.current &&
+        !studioRef.current.contains(event.target)
+      ) {
+        setStudioOpen(false)
       }
 
       if (
@@ -208,10 +252,12 @@ export default function Navbar() {
     }
   }, [])
 
+  // ======================================================
+  // NAVBAR STATE
+  // ======================================================
 
   const solid = scrolled || mobileOpen
   const isHidden = hidden && !mobileOpen
-
 
   // ======================================================
   // LINK STYLE
@@ -228,32 +274,38 @@ export default function Navbar() {
     }`
   }
 
-
   // ======================================================
-  // PHOTOGRAPHY ACTIVE STATE
+  // ACTIVE STATES
   // ======================================================
 
-  const isPhotographyActive =
+  const isWeddingsActive =
     location.pathname.startsWith('/photography')
 
-
-  // ======================================================
-  // STORIES ACTIVE STATE
-  // ======================================================
+  const isStudioActive =
+    location.pathname.startsWith('/studio')
 
   const isStoriesActive =
     location.pathname.startsWith('/stories')
 
-
   // ======================================================
-  // HANDLE PHOTOGRAPHY BUTTON
+  // HANDLE WEDDINGS BUTTON
   // ======================================================
 
-  const handlePhotographyClick = () => {
-    setPhotographyOpen((value) => !value)
+  const handleWeddingsClick = () => {
+    setWeddingsOpen((value) => !value)
+    setStudioOpen(false)
     setStoriesOpen(false)
   }
 
+  // ======================================================
+  // HANDLE STUDIO BUTTON
+  // ======================================================
+
+  const handleStudioClick = () => {
+    setStudioOpen((value) => !value)
+    setWeddingsOpen(false)
+    setStoriesOpen(false)
+  }
 
   // ======================================================
   // HANDLE STORIES BUTTON
@@ -261,18 +313,29 @@ export default function Navbar() {
 
   const handleStoriesClick = () => {
     setStoriesOpen((value) => !value)
-    setPhotographyOpen(false)
+    setWeddingsOpen(false)
+    setStudioOpen(false)
   }
 
-
   // ======================================================
-  // HANDLE MOBILE PHOTOGRAPHY
+  // HANDLE MOBILE WEDDINGS
   // ======================================================
 
-  const handleMobilePhotographyClick = () => {
-    setMobilePhotographyOpen((value) => !value)
+  const handleMobileWeddingsClick = () => {
+    setMobileWeddingsOpen((value) => !value)
+    setMobileStudioOpen(false)
+    setMobileStoriesOpen(false)
   }
 
+  // ======================================================
+  // HANDLE MOBILE STUDIO
+  // ======================================================
+
+  const handleMobileStudioClick = () => {
+    setMobileStudioOpen((value) => !value)
+    setMobileWeddingsOpen(false)
+    setMobileStoriesOpen(false)
+  }
 
   // ======================================================
   // HANDLE MOBILE STORIES
@@ -280,18 +343,27 @@ export default function Navbar() {
 
   const handleMobileStoriesClick = () => {
     setMobileStoriesOpen((value) => !value)
+    setMobileWeddingsOpen(false)
+    setMobileStudioOpen(false)
   }
 
-
   // ======================================================
-  // GO TO PHOTOGRAPHY LANDING
+  // GO TO WEDDINGS LANDING
   // ======================================================
 
-  const handlePhotographyTitleClick = () => {
-    setPhotographyOpen(false)
+  const handleWeddingsTitleClick = () => {
+    setWeddingsOpen(false)
     navigate('/photography')
   }
 
+  // ======================================================
+  // GO TO STUDIO LANDING
+  // ======================================================
+
+  const handleStudioTitleClick = () => {
+    setStudioOpen(false)
+    navigate('/studio')
+  }
 
   // ======================================================
   // GO TO STORIES LANDING
@@ -302,6 +374,9 @@ export default function Navbar() {
     navigate('/stories')
   }
 
+  // ======================================================
+  // RETURN
+  // ======================================================
 
   return (
     <header
@@ -315,7 +390,7 @@ export default function Navbar() {
           'transform 0.4s ease, background-color 0.3s ease, backdrop-filter 0.3s ease',
 
         backgroundColor: solid
-          ? 'rgba(58,46,38,0.65)'
+          ? '#4e392f'
           : 'transparent',
 
         backdropFilter: solid
@@ -336,7 +411,6 @@ export default function Navbar() {
 
         <div className="w-full px-6 lg:px-8 py-4 flex items-center">
 
-
           {/* ======================================================
               LEFT: LOGO
               ====================================================== */}
@@ -356,7 +430,6 @@ export default function Navbar() {
 
           </div>
 
-
           {/* ======================================================
               RIGHT: DESKTOP NAVIGATION
               ====================================================== */}
@@ -365,48 +438,37 @@ export default function Navbar() {
 
             <ul className="flex items-center gap-7">
 
-
-              {/* ==================================================
-                  NORMAL NAVIGATION LINKS
-              ================================================== */}
-
               {NAV_LINKS.map((link) => {
 
-
                 // ==================================================
-                // PHOTOGRAPHY
+                // WEDDINGS
                 // ==================================================
 
-                if (link.label === 'Photography') {
+                if (link.label === 'Weddings') {
                   return (
                     <li
                       key={link.label}
-                      ref={photographyRef}
+                      ref={weddingsRef}
                       className="relative"
                     >
 
-                      {/* ------------------------------------------
-                          PHOTOGRAPHY BUTTON
-                      ------------------------------------------ */}
-
                       <button
                         type="button"
-                        onClick={handlePhotographyClick}
-                        aria-expanded={photographyOpen}
+                        onClick={handleWeddingsClick}
+                        aria-expanded={weddingsOpen}
                         aria-haspopup="true"
                         className={`
-                          ${linkClass(isPhotographyActive)}
+                          ${linkClass(isWeddingsActive)}
                           flex items-center gap-2
                         `}
                       >
-
                         <span>
-                          Photography
+                          Weddings
                         </span>
 
                         <motion.span
                           animate={{
-                            rotate: photographyOpen
+                            rotate: weddingsOpen
                               ? 180
                               : 0,
                           }}
@@ -420,17 +482,11 @@ export default function Navbar() {
                             strokeWidth={1.2}
                           />
                         </motion.span>
-
                       </button>
-
-
-                      {/* ------------------------------------------
-                          PHOTOGRAPHY DROPDOWN
-                      ------------------------------------------ */}
 
                       <AnimatePresence>
 
-                        {photographyOpen && (
+                        {weddingsOpen && (
 
                           <motion.div
                             initial={{
@@ -466,15 +522,11 @@ export default function Navbar() {
                               overflow-hidden
                               border
                               border-ivory/10
-                              bg-[#3A2E26]/95
+                              bg-[#4e392f]/95
                               backdrop-blur-2xl
                               shadow-2xl
                             "
                           >
-
-                            {/* --------------------------------------
-                                TOP INTRO
-                            -------------------------------------- */}
 
                             <div className="px-7 pt-7 pb-5 border-b border-ivory/10">
 
@@ -499,15 +551,14 @@ export default function Navbar() {
                                     italic
                                     text-ivory
                                   ">
-                                    Photography
+                                    Weddings
                                   </h3>
 
                                 </div>
 
-
                                 <button
                                   type="button"
-                                  onClick={handlePhotographyTitleClick}
+                                  onClick={handleWeddingsTitleClick}
                                   className="
                                     font-sans
                                     text-[9px]
@@ -525,14 +576,9 @@ export default function Navbar() {
 
                             </div>
 
-
-                            {/* --------------------------------------
-                                CATEGORY LINKS
-                            -------------------------------------- */}
-
                             <div className="p-3">
 
-                              {PHOTOGRAPHY_LINKS.map(
+                              {WEDDING_LINKS.map(
                                 (item, index) => (
 
                                   <motion.div
@@ -567,8 +613,6 @@ export default function Navbar() {
                                       "
                                     >
 
-                                      {/* Number */}
-
                                       <span className="
                                         font-sans
                                         text-[9px]
@@ -578,9 +622,6 @@ export default function Navbar() {
                                       ">
                                         {item.number}
                                       </span>
-
-
-                                      {/* Title */}
 
                                       <div className="flex-1">
 
@@ -610,8 +651,269 @@ export default function Navbar() {
 
                                       </div>
 
+                                      <span className="
+                                        text-ivory/25
+                                        group-hover:text-sand
+                                        group-hover:translate-x-1
+                                        transition-all
+                                        duration-300
+                                        text-lg
+                                      ">
+                                        →
+                                      </span>
 
-                                      {/* Arrow */}
+                                    </Link>
+
+                                  </motion.div>
+
+                                )
+                              )}
+
+                            </div>
+
+                            <div className="
+                              px-7
+                              py-4
+                              border-t
+                              border-ivory/10
+                            ">
+
+                              <p className="
+                                font-sans
+                                text-[8px]
+                                uppercase
+                                tracking-[0.3em]
+                                text-ivory/30
+                              ">
+                                Weddings · Pre-Weddings
+                              </p>
+
+                            </div>
+
+                          </motion.div>
+
+                        )}
+
+                      </AnimatePresence>
+
+                    </li>
+                  )
+                }
+
+                // ==================================================
+                // STUDIO
+                // ==================================================
+
+                if (link.label === 'Studio') {
+                  return (
+                    <li
+                      key={link.label}
+                      ref={studioRef}
+                      className="relative"
+                    >
+
+                      <button
+                        type="button"
+                        onClick={handleStudioClick}
+                        aria-expanded={studioOpen}
+                        aria-haspopup="true"
+                        className={`
+                          ${linkClass(isStudioActive)}
+                          flex items-center gap-2
+                        `}
+                      >
+                        <span>
+                          Studio
+                        </span>
+
+                        <motion.span
+                          animate={{
+                            rotate: studioOpen
+                              ? 180
+                              : 0,
+                          }}
+                          transition={{
+                            duration: 0.25,
+                          }}
+                          className="flex items-center"
+                        >
+                          <ChevronDown
+                            size={13}
+                            strokeWidth={1.2}
+                          />
+                        </motion.span>
+                      </button>
+
+                      <AnimatePresence>
+
+                        {studioOpen && (
+
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              y: 12,
+                              scale: 0.98,
+                            }}
+                            animate={{
+                              opacity: 1,
+                              y: 0,
+                              scale: 1,
+                            }}
+                            exit={{
+                              opacity: 0,
+                              y: 10,
+                              scale: 0.98,
+                            }}
+                            transition={{
+                              duration: 0.3,
+                              ease: [
+                                0.22,
+                                1,
+                                0.36,
+                                1,
+                              ],
+                            }}
+                            className="
+                              absolute
+                              top-full
+                              right-0
+                              mt-5
+                              w-[430px]
+                              overflow-hidden
+                              border
+                              border-ivory/10
+                              bg-[#4e392f]/95
+                              backdrop-blur-2xl
+                              shadow-2xl
+                            "
+                          >
+
+                            {/* TOP INTRO */}
+
+                            <div className="px-7 pt-7 pb-5 border-b border-ivory/10">
+
+                              <div className="flex items-center justify-between">
+
+                                <div>
+
+                                  <p className="
+                                    font-sans
+                                    text-[9px]
+                                    uppercase
+                                    tracking-[0.35em]
+                                    text-ivory/45
+                                    mb-2
+                                  ">
+                                    Explore Our Studio
+                                  </p>
+
+                                  <h3 className="
+                                    font-serif
+                                    text-2xl
+                                    italic
+                                    text-ivory
+                                  ">
+                                    Studio
+                                  </h3>
+
+                                </div>
+
+                                <button
+                                  type="button"
+                                  onClick={handleStudioTitleClick}
+                                  className="
+                                    font-sans
+                                    text-[9px]
+                                    uppercase
+                                    tracking-[0.25em]
+                                    text-ivory/45
+                                    hover:text-sand
+                                    transition-colors
+                                  "
+                                >
+                                  View All
+                                </button>
+
+                              </div>
+
+                            </div>
+
+                            {/* STUDIO CATEGORY LINKS */}
+
+                            <div className="p-3">
+
+                              {STUDIO_LINKS.map(
+                                (item, index) => (
+
+                                  <motion.div
+                                    key={item.path}
+                                    initial={{
+                                      opacity: 0,
+                                      x: -8,
+                                    }}
+                                    animate={{
+                                      opacity: 1,
+                                      x: 0,
+                                    }}
+                                    transition={{
+                                      delay:
+                                        index * 0.06,
+                                      duration: 0.3,
+                                    }}
+                                  >
+
+                                    <Link
+                                      to={item.path}
+                                      className="
+                                        group
+                                        flex
+                                        items-center
+                                        gap-5
+                                        px-4
+                                        py-4
+                                        transition-all
+                                        duration-300
+                                        hover:bg-ivory/5
+                                      "
+                                    >
+
+                                      <span className="
+                                        font-sans
+                                        text-[9px]
+                                        tracking-[0.2em]
+                                        text-ivory/30
+                                        w-6
+                                      ">
+                                        {item.number}
+                                      </span>
+
+                                      <div className="flex-1">
+
+                                        <h4 className="
+                                          font-serif
+                                          text-xl
+                                          italic
+                                          text-ivory
+                                          group-hover:text-sand
+                                          transition-colors
+                                          duration-300
+                                        ">
+                                          {item.label}
+                                        </h4>
+
+                                        <p className="
+                                          mt-1
+                                          font-sans
+                                          text-[9px]
+                                          leading-relaxed
+                                          tracking-[0.04em]
+                                          text-ivory/45
+                                          max-w-[260px]
+                                        ">
+                                          {item.description}
+                                        </p>
+
+                                      </div>
 
                                       <span className="
                                         text-ivory/25
@@ -633,10 +935,7 @@ export default function Navbar() {
 
                             </div>
 
-
-                            {/* --------------------------------------
-                                BOTTOM LINE
-                            -------------------------------------- */}
+                            {/* BOTTOM LINE */}
 
                             <div className="
                               px-7
@@ -652,7 +951,7 @@ export default function Navbar() {
                                 tracking-[0.3em]
                                 text-ivory/30
                               ">
-                                Weddings · Stories · Fashion
+                                Kids · Maternity · Newborn · Family · Fashion
                               </p>
 
                             </div>
@@ -667,7 +966,6 @@ export default function Navbar() {
                   )
                 }
 
-
                 // ==================================================
                 // STORIES
                 // ==================================================
@@ -680,10 +978,6 @@ export default function Navbar() {
                       className="relative"
                     >
 
-                      {/* ------------------------------------------
-                          STORIES BUTTON
-                      ------------------------------------------ */}
-
                       <button
                         type="button"
                         onClick={handleStoriesClick}
@@ -694,7 +988,6 @@ export default function Navbar() {
                           flex items-center gap-2
                         `}
                       >
-
                         <span>
                           Stories
                         </span>
@@ -715,13 +1008,7 @@ export default function Navbar() {
                             strokeWidth={1.2}
                           />
                         </motion.span>
-
                       </button>
-
-
-                      {/* ------------------------------------------
-                          STORIES DROPDOWN
-                      ------------------------------------------ */}
 
                       <AnimatePresence>
 
@@ -761,15 +1048,11 @@ export default function Navbar() {
                               overflow-hidden
                               border
                               border-ivory/10
-                              bg-[#3A2E26]/95
+                              bg-[#4e392f]/95
                               backdrop-blur-2xl
                               shadow-2xl
                             "
                           >
-
-                            {/* --------------------------------------
-                                TOP INTRO
-                            -------------------------------------- */}
 
                             <div className="px-7 pt-7 pb-5 border-b border-ivory/10">
 
@@ -799,7 +1082,6 @@ export default function Navbar() {
 
                                 </div>
 
-
                                 <button
                                   type="button"
                                   onClick={handleStoriesTitleClick}
@@ -819,11 +1101,6 @@ export default function Navbar() {
                               </div>
 
                             </div>
-
-
-                            {/* --------------------------------------
-                                STORY CATEGORY LINKS
-                            -------------------------------------- */}
 
                             <div className="p-3">
 
@@ -862,8 +1139,6 @@ export default function Navbar() {
                                       "
                                     >
 
-                                      {/* Number */}
-
                                       <span className="
                                         font-sans
                                         text-[9px]
@@ -873,9 +1148,6 @@ export default function Navbar() {
                                       ">
                                         {item.number}
                                       </span>
-
-
-                                      {/* Title */}
 
                                       <div className="flex-1">
 
@@ -905,9 +1177,6 @@ export default function Navbar() {
 
                                       </div>
 
-
-                                      {/* Arrow */}
-
                                       <span className="
                                         text-ivory/25
                                         group-hover:text-sand
@@ -927,11 +1196,6 @@ export default function Navbar() {
                               )}
 
                             </div>
-
-
-                            {/* --------------------------------------
-                                BOTTOM LINE
-                            -------------------------------------- */}
 
                             <div className="
                               px-7
@@ -962,9 +1226,8 @@ export default function Navbar() {
                   )
                 }
 
-
                 // ==================================================
-                // ALL OTHER NAVIGATION LINKS
+                // OTHER DESKTOP LINKS
                 // ==================================================
 
                 return (
@@ -984,35 +1247,12 @@ export default function Navbar() {
 
                   </li>
                 )
-
               })}
 
             </ul>
 
-
-            {/* ======================================================
-                INFO
-                ====================================================== */}
-
-            <button
-              type="button"
-              className="
-                ml-12
-                font-sans
-                text-[12px]
-                uppercase
-                tracking-[0.28em]
-                transition-colors
-                duration-300
-                text-ivory/85
-                hover:text-ivory
-              "
-            >
-              Info
-            </button>
-
+            {/* INFO */}
           </div>
-
 
           {/* ======================================================
               MOBILE MENU TOGGLE
@@ -1053,7 +1293,6 @@ export default function Navbar() {
 
       </nav>
 
-
       {/* ======================================================
           MOBILE MENU
           ====================================================== */}
@@ -1086,7 +1325,7 @@ export default function Navbar() {
             }}
             className="
               lg:hidden
-              bg-[#3A2E26]/95
+              bg-[#4e392f]
               backdrop-blur-2xl
               overflow-hidden
               border-t
@@ -1096,15 +1335,13 @@ export default function Navbar() {
 
             <ul className="px-8 py-8 flex flex-col gap-1">
 
-
               {NAV_LINKS.map((link, i) => {
 
-
                 // ==================================================
-                // MOBILE PHOTOGRAPHY
+                // MOBILE WEDDINGS
                 // ==================================================
 
-                if (link.label === 'Photography') {
+                if (link.label === 'Weddings') {
 
                   return (
                     <motion.li
@@ -1123,12 +1360,10 @@ export default function Navbar() {
                       }}
                     >
 
-                      {/* Photography Toggle */}
-
                       <button
                         type="button"
                         onClick={
-                          handleMobilePhotographyClick
+                          handleMobileWeddingsClick
                         }
                         className="
                           w-full
@@ -1144,18 +1379,18 @@ export default function Navbar() {
                           text-ivory
                         "
                         aria-expanded={
-                          mobilePhotographyOpen
+                          mobileWeddingsOpen
                         }
                       >
 
                         <span>
-                          Photography
+                          Weddings
                         </span>
 
                         <motion.span
                           animate={{
                             rotate:
-                              mobilePhotographyOpen
+                              mobileWeddingsOpen
                                 ? 180
                                 : 0,
                           }}
@@ -1171,12 +1406,9 @@ export default function Navbar() {
 
                       </button>
 
-
-                      {/* Mobile Photography Categories */}
-
                       <AnimatePresence>
 
-                        {mobilePhotographyOpen && (
+                        {mobileWeddingsOpen && (
 
                           <motion.div
                             initial={{
@@ -1210,7 +1442,7 @@ export default function Navbar() {
                             "
                           >
 
-                            {PHOTOGRAPHY_LINKS.map(
+                            {WEDDING_LINKS.map(
                               (item, index) => (
 
                                 <motion.div
@@ -1278,6 +1510,178 @@ export default function Navbar() {
                   )
                 }
 
+                // ==================================================
+                // MOBILE STUDIO
+                // ==================================================
+
+                if (link.label === 'Studio') {
+
+                  return (
+                    <motion.li
+                      key={link.label}
+                      initial={{
+                        opacity: 0,
+                        x: -12,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        x: 0,
+                      }}
+                      transition={{
+                        delay: i * 0.05,
+                        duration: 0.4,
+                      }}
+                    >
+
+                      <button
+                        type="button"
+                        onClick={
+                          handleMobileStudioClick
+                        }
+                        className="
+                          w-full
+                          flex
+                          items-center
+                          justify-between
+                          font-serif
+                          text-3xl
+                          italic
+                          py-2
+                          text-left
+                          transition-colors
+                          text-ivory
+                        "
+                        aria-expanded={
+                          mobileStudioOpen
+                        }
+                      >
+
+                        <span>
+                          Studio
+                        </span>
+
+                        <motion.span
+                          animate={{
+                            rotate:
+                              mobileStudioOpen
+                                ? 180
+                                : 0,
+                          }}
+                          transition={{
+                            duration: 0.25,
+                          }}
+                        >
+                          <ChevronDown
+                            size={20}
+                            strokeWidth={1}
+                          />
+                        </motion.span>
+
+                      </button>
+
+                      <AnimatePresence>
+
+                        {mobileStudioOpen && (
+
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              height: 0,
+                            }}
+                            animate={{
+                              opacity: 1,
+                              height: 'auto',
+                            }}
+                            exit={{
+                              opacity: 0,
+                              height: 0,
+                            }}
+                            transition={{
+                              duration: 0.35,
+                              ease: [
+                                0.22,
+                                1,
+                                0.36,
+                                1,
+                              ],
+                            }}
+                            className="
+                              overflow-hidden
+                              pl-5
+                              border-l
+                              border-ivory/15
+                              mt-2
+                              mb-3
+                            "
+                          >
+
+                            {STUDIO_LINKS.map(
+                              (item, index) => (
+
+                                <motion.div
+                                  key={item.path}
+                                  initial={{
+                                    opacity: 0,
+                                    x: -8,
+                                  }}
+                                  animate={{
+                                    opacity: 1,
+                                    x: 0,
+                                  }}
+                                  transition={{
+                                    delay:
+                                      index * 0.05,
+                                    duration: 0.3,
+                                  }}
+                                >
+
+                                  <NavLink
+                                    to={item.path}
+                                    className="
+                                      group
+                                      flex
+                                      items-center
+                                      gap-4
+                                      py-3
+                                    "
+                                  >
+
+                                    <span className="
+                                      font-sans
+                                      text-[9px]
+                                      tracking-[0.2em]
+                                      text-ivory/30
+                                    ">
+                                      {item.number}
+                                    </span>
+
+                                    <span className="
+                                      font-serif
+                                      text-xl
+                                      italic
+                                      text-ivory/80
+                                      group-hover:text-sand
+                                      transition-colors
+                                    ">
+                                      {item.label}
+                                    </span>
+
+                                  </NavLink>
+
+                                </motion.div>
+
+                              )
+                            )}
+
+                          </motion.div>
+
+                        )}
+
+                      </AnimatePresence>
+
+                    </motion.li>
+                  )
+                }
 
                 // ==================================================
                 // MOBILE STORIES
@@ -1301,8 +1705,6 @@ export default function Navbar() {
                         duration: 0.4,
                       }}
                     >
-
-                      {/* Stories Toggle */}
 
                       <button
                         type="button"
@@ -1349,9 +1751,6 @@ export default function Navbar() {
                         </motion.span>
 
                       </button>
-
-
-                      {/* Mobile Stories Categories */}
 
                       <AnimatePresence>
 
@@ -1456,7 +1855,6 @@ export default function Navbar() {
                     </motion.li>
                   )
                 }
-
 
                 // ==================================================
                 // OTHER MOBILE LINKS

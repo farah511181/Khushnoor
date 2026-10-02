@@ -11,13 +11,8 @@ import { useEffect } from 'react'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 
-import Intro from './components/intro/Intro'
-
 import Home from './pages/Home/Home'
 import About from './pages/About/About'
-
-import Films from './pages/Films/Films'
-import FilmDetail from './pages/Films/FilmDetail'
 
 import Photography from './pages/Photography/Photography'
 import PreWedding from './pages/Photography/PreWedding/PreWedding'
@@ -25,12 +20,6 @@ import PostWedding from './pages/Photography/PostWedding/PostWedding'
 import Wedding from './pages/Photography/Wedding/Wedding'
 import Family from './pages/Photography/Family/Family'
 import Fashion from './pages/Photography/Fashion/Fashion'
-
-import Poetry from './pages/Poetry/Poetry'
-
-import Blog from './pages/Blog/Blog'
-import BlogDetail from './pages/Blog/BlogDetail'
-
 import Contact from './pages/Contact/Contact'
 
 
@@ -105,34 +94,7 @@ function WebsiteLayout() {
             path="/photography/fashion"
             element={<Fashion />}
           />
-
-          {/* FILMS */}
-          <Route
-            path="/films"
-            element={<Films />}
-          />
-
-          <Route
-            path="/films/:id"
-            element={<FilmDetail />}
-          />
-
-          {/* POETRY */}
-          <Route
-            path="/poetry"
-            element={<Poetry />}
-          />
-
-          {/* BLOG */}
-          <Route
-            path="/blog"
-            element={<Blog />}
-          />
-
-          <Route
-            path="/blog/:id"
-            element={<BlogDetail />}
-          />
+         
 
           {/* CONTACT */}
           <Route
@@ -168,21 +130,7 @@ function App() {
 
       <Routes>
 
-        {/* =================================================
-            INTRO PAGE
-
-            /
-            ↓
-            Intro
-
-            No Navbar
-            No Footer
-        ================================================= */}
-
-        <Route
-          path="/"
-          element={<Intro />}
-        />
+       
 
 
         {/* =================================================

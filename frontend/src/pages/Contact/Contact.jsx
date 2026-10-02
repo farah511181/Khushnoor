@@ -62,7 +62,7 @@ export default function Contact() {
                 </h4>
 
                 <p className="text-lg text-espresso">
-                  +91 98765 43210
+                  +91 7744033650
                 </p>
               </div>
 
